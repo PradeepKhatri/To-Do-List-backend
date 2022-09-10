@@ -7,11 +7,7 @@ var items= [];
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(express.static("public"));
-
-app.get("/", function(req,res) {
-    var today = new Date();
+var today = new Date();
 
     var options = {
         weekday : "long",
@@ -21,15 +17,25 @@ app.get("/", function(req,res) {
 
     var day = today.toLocaleDateString("en-US" , options);
 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static("public"));
+
+app.get("/", function(req,res) {
+    items = [];
+
     res.render('list' , {KindOfDay: day, newlistitems : items});
 });
+
+app.get("/added",(req,res) => {
+    res.render('list', {KindOfDay: day, newlistitems: items});
+})
 
 app.post("/" , function(req , res) {
     var item = req.body.newItem;
     
     items.push(item);
 
-    res.redirect("/");
+    res.redirect("/added");
 })
 
 app.listen(process.env.PORT || 3000, function () {
