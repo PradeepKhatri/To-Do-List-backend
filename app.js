@@ -3,11 +3,11 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-var items= [];
+let items= [];
 
 app.set('view engine', 'ejs');
 
-var today = new Date();
+let today = new Date();
 
     var options = {
         weekday : "long",
@@ -15,7 +15,7 @@ var today = new Date();
         month : "long"
     };
 
-    var day = today.toLocaleDateString("en-US" , options);
+    let day = today.toLocaleDateString("en-US" , options);
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
